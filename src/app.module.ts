@@ -18,6 +18,7 @@ import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { HttpExceptionFilter } from './core/filters/http-exception.filter';
 import { MailModule } from 'mail/mail.module';
 import { MailModuleConfig } from './config/options/mail.config';
+import { QuestionModule } from './question/question.module';
 @Module({
   imports: [
     ConfigModule.forRootAsync(ConfigModule, { useClass: ConfigModuleConfig }),
@@ -37,6 +38,7 @@ import { MailModuleConfig } from './config/options/mail.config';
     CourseModule,
     RoadmapModule,
     JobProfileModule,
+    QuestionModule,
   ],
   controllers: [AppController],
   providers: [
