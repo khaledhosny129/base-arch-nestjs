@@ -87,4 +87,24 @@ export class ConfigService {
   get jwtExpiry(): string {
     return this.envConfig.JWT_EXPIRY;
   }
+
+  get mailFrom(): string {
+    return this.envConfig.MAIL_FROM;
+  }
+
+  get mailPassword(): string {
+    return this.envConfig.MAIL_PASSWORD;
+  }
+
+  get linkedinClientId(): string {
+    return this.envConfig.LINKEDIN_CLIENT_ID;
+  }
+
+  get linkedinClientSecret(): string {
+    return this.envConfig.LINKEDIN_CLIENT_SECRET;
+  }
+
+  get linkedinCallbackUrl(): string {
+    return this.envConfig.LINKEDIN_CALLBACK_URL;
+  }
 }

@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   Patch,
   Post,
@@ -18,11 +20,14 @@ import { Roles } from '../auth/roles.decorator';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { RoleEnum } from './enums/role.enum';
 import { UsersService } from './users.service';
+import { AuthService } from 'src/auth/auth.service';
+import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @Controller('users')
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
+    private readonly authService: AuthService,
   ) {}
 
   @Get('/me')
@@ -64,5 +69,41 @@ export class UsersController {
   @Roles(RoleEnum.SUPER_ADMIN)
   remove(@Param('id') id: string) {
     return this.usersService.remove(id);
+  }
+
+  @Post('disable-2fa')
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Disable 2FA' })
+  @ApiResponse({ 
+    status: 200, 
+    description: '2FA disabled successfully',
+    schema: {
+      type: 'object',
+      properties: {
+        message: { type: 'string', example: '2FA disabled successfully' }
+      }
+    }
+  })
+  async disable2fa(@Req() req: RequestWithUser) {
+    return await this.authService.disable2fa(req.user._id.toString());
+  }
+
+  @Post('enable-2fa')
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Enable 2FA' })
+  @ApiResponse({ 
+    status: 200, 
+    description: '2FA enabled successfully',
+    schema: {
+      type: 'object',
+      properties: {
+        message: { type: 'string', example: '2FA enabled successfully' }
+      }
+    }
+  })
+  async enable2fa(@Req() req: RequestWithUser) {
+    return await this.authService.enable2fa(req.user._id.toString());
   }
 }

@@ -16,11 +16,17 @@ import { JobProfileModule } from './job-profile/job-profile.module';
 import { LoggingInterceptor } from './core/interceptors/logging.interceptor';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { HttpExceptionFilter } from './core/filters/http-exception.filter';
+import { MailModule } from 'mail/mail.module';
+import { MailModuleConfig } from './config/options/mail.config';
 @Module({
   imports: [
     ConfigModule.forRootAsync(ConfigModule, { useClass: ConfigModuleConfig }),
     MongooseModule.forRootAsync({
       useClass: MongooseModuleConfig,
+      imports: [ConfigModule.Deferred],
+    }),
+    MailModule.forRootAsync(MailModule, {
+      useClass: MailModuleConfig,
       imports: [ConfigModule.Deferred],
     }),
     AuthModule,

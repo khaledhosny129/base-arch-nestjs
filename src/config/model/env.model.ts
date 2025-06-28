@@ -33,4 +33,19 @@ export class EnvironmentVariables {
 
   @IsString()
   JWT_EXPIRY: string;
+
+  @IsString()
+  MAIL_FROM: string;
+
+  @IsString()
+  MAIL_PASSWORD: string;
+
+  @IsString()
+  LINKEDIN_CLIENT_ID: string;
+
+  @IsString()
+  LINKEDIN_CLIENT_SECRET: string;
+
+  @IsString()
+  LINKEDIN_CALLBACK_URL: string;
 }

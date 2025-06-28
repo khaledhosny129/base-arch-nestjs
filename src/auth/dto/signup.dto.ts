@@ -2,11 +2,13 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
   IsEmail,
+  IsEnum,
   IsNotEmpty,
   IsString,
   IsStrongPassword,
   ValidateNested,
 } from 'class-validator';
+import { RoleEnum } from 'src/users/enums/role.enum';
 
 
 export class SignupDto {
@@ -22,6 +24,10 @@ export class SignupDto {
   @IsStrongPassword()
   @ApiProperty({ type: String, required: true, example: 'P@ssw0rd' })
   password: string;
+
+  @IsEnum(RoleEnum)
+  @ApiProperty({ type: String, required: true, example: RoleEnum.STUDENT })
+  role: RoleEnum;
 
   // @IsEnum(RoleEnum)
   // @ApiProperty({
