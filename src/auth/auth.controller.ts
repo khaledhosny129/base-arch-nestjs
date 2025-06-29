@@ -33,6 +33,7 @@ export class AuthController {
   ) {}
 
   @Post('signup')
+  @ApiOperation({ summary: 'Signup endpoint' })
   async signup(@Body() signupDto: SignupDto) {
     try {
       //* 1 - create User

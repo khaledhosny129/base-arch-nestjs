@@ -28,6 +28,9 @@ export class Question extends BaseEntity {
   @Prop({ type: String, required: true })
   questionName: string;
 
+  @Prop({ type: Number, required: true })
+  totalWeight: number; 
+
   @Prop({ type: String, enum: Object.values(QuestionTypeEnum), required: true })
   questionType: QuestionTypeEnum;
 

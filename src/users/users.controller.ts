@@ -31,12 +31,14 @@ export class UsersController {
   ) {}
 
   @Get('/me')
+  @ApiOperation({ summary: 'Get user profile' })
   @UseGuards(JwtAuthGuard)
   async profile(@Req() req: RequestWithUser) {
     return { user: req.user };
   }
 
   @Patch('/me')
+  @ApiOperation({ summary: 'Update user profile' })
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles(RoleEnum.SUPER_ADMIN, RoleEnum.USER)
   updateMe(@Req() req: RequestWithUser, @Body() updateUserDto: UpdateUserDto) {
@@ -44,6 +46,7 @@ export class UsersController {
   }
 
   @Post('search')
+  @ApiOperation({ summary: 'Search users' })
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles(RoleEnum.SUPER_ADMIN)
   findAll(@Body() options: SearchOptions) {
@@ -51,6 +54,7 @@ export class UsersController {
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'Get user by id' })
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles(RoleEnum.SUPER_ADMIN)
   findOne(@Param('id') id: string) {
@@ -58,6 +62,7 @@ export class UsersController {
   }
 
   @Patch(':id')
+  @ApiOperation({ summary: 'Update user by id' })
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles(RoleEnum.SUPER_ADMIN)
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
@@ -65,6 +70,7 @@ export class UsersController {
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: 'Delete user by id' })
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles(RoleEnum.SUPER_ADMIN)
   remove(@Param('id') id: string) {

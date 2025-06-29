@@ -31,6 +31,7 @@ export class QuestionController {
   @ApiResponse({ status: 201, description: 'Question created successfully' })
   @ApiResponse({ status: 400, description: 'Bad Request' })
   create(@Body() createQuestionDto: CreateQuestionDto) {
+    
     return this.questionService.create(createQuestionDto);
   }
 
