@@ -127,6 +127,21 @@ export class BaseService<T> {
   async findOne(filter: any, projection: any = {}): Promise<T> {
     const doc = await this.model.findOne(filter, projection).exec();
 
+    if (!doc) {
+      throw new RecordNotFoundException(this.model.modelName);
+    }
+
+    return doc as T;
+  }
+
+  /**
+   * Updates one document that matches the given filter.
+   */
+  async updateOne(filter: any, updates: any, projection: any = {}): Promise<T> {
+    const doc = await this.model.findOneAndUpdate(filter, updates, { new: true, projection }).exec();
+    if (!doc) {
+      throw new RecordNotFoundException(this.model.modelName);
+    }
     return doc as T;
   }
 

@@ -12,10 +12,12 @@ import { LocalStrategy } from './strategies/local.strategy';
 import { UsersModule } from '../users/users.module';
 import { MailModule } from 'mail/mail.module';
 import { LinkedInStrategy } from './strategies/linkedin.strategy';
+import { StudentModule } from '../student/student.module';
 
 @Module({
   imports: [
     UsersModule,
+    StudentModule,
     PassportModule.register({ defaultStrategy: 'jwt', session: true }),
     JwtModule.registerAsync({
       imports: [ConfigModule.Deferred],

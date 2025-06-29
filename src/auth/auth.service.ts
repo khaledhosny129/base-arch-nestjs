@@ -20,6 +20,7 @@ import { EmailRequest } from 'mail/interfaces';
 import { ConfigService } from 'src/config/config.services';
 import { studentWelcomeTemplate } from 'assets/email-temps/student-welcome.template';
 import { twoFactorTemplate } from 'assets/email-temps/2fa.template';
+import { StudentService } from '../student/student.service';
 
 @Injectable()
 export class AuthService {
@@ -28,6 +29,7 @@ export class AuthService {
     private jwtService: JwtService,
     private mailService: MailService,
     private configService: ConfigService,
+    private studentService: StudentService,
   ) {}
 
   async signup(signupDto: SignupDto) {
@@ -40,6 +42,11 @@ export class AuthService {
       const { password, ...userWithoutPassword } = user.toObject?.() || user;
 
       if (user.role === RoleEnum.STUDENT) {
+        // Create student profile
+        await this.studentService.create({
+          userId: user._id,
+        });
+
         const emailObj: EmailRequest = {
           from: this.configService.mailFrom,
           to: user.email,
@@ -256,6 +263,11 @@ export class AuthService {
         role: RoleEnum.STUDENT,
         isActive: true,
         linkedinId,
+      });
+
+      // Create student profile for new LinkedIn users
+      await this.studentService.create({
+        userId: user._id.toString(),
       });
     }
     return user;

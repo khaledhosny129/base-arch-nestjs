@@ -19,6 +19,8 @@ import { HttpExceptionFilter } from './core/filters/http-exception.filter';
 import { MailModule } from 'mail/mail.module';
 import { MailModuleConfig } from './config/options/mail.config';
 import { QuestionModule } from './question/question.module';
+import { StudentModule } from './student/student.module';
+
 @Module({
   imports: [
     ConfigModule.forRootAsync(ConfigModule, { useClass: ConfigModuleConfig }),
@@ -39,6 +41,7 @@ import { QuestionModule } from './question/question.module';
     RoadmapModule,
     JobProfileModule,
     QuestionModule,
+    StudentModule,
   ],
   controllers: [AppController],
   providers: [
